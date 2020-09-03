@@ -25,7 +25,7 @@ function clear() {
 }
 
 function updateHistory(op, a, b) {
-    let expression = Math.round(+a * 1000) / 1000 + op + +Math.round(+b * 1000) / 1000 + '=' + +displayValue.toFixed(3);
+    let expression = Math.round(+a * 1000) / 1000 + op + +Math.round(+b * 1000) / 1000 + '=' + Math.round(+displayValue * 1000) / 1000;
     let child = document.createElement('p');
     child.textContent = expression;
     history.appendChild(child);
@@ -35,15 +35,24 @@ function updateHistory(op, a, b) {
     }
 }
 
+function deleteLast() {
+    displayValue = displayValue.slice(0, -1);
+    if (!b) {
+        a = a.slice(0, -1);
+    } else {
+        b = b.slice(0, -1);
+    }
+}
+
 function updateDisplay(display, text) {
     if (text === 'Clear') {
         displayValue = '0';
         clear();
     } else if (text === '←') {
-        displayValue = displayValue.slice(0, -1);
+        deleteLast();
     } else if (a !== '' && op && b !== '' && (text === '=' || text in operators)){
         // console.log('pop!')
-        displayValue = operate(operators[op], parseFloat(a), parseFloat(b));
+        displayValue = operate(operators[op], parseFloat(a), parseFloat(b)).toString();
         updateHistory(op, a, b);
         clear();
         a = displayValue;
@@ -69,9 +78,9 @@ function updateDisplay(display, text) {
         displayValue += text;
     }
     
-    // console.log('a = ', a, typeof a);
-    // console.log('b = ', b, typeof b);
-    // console.log('op = ', op, typeof op);
+    console.log('a = ', a, typeof a);
+    console.log('b = ', b, typeof b);
+    console.log('op = ', op, typeof op);
     display.textContent = (displayValue) ? displayValue : '0';
 }
 
