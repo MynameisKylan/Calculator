@@ -47,4 +47,5 @@ button {
     width: 25%;
     height: 350px;
     border: 2px solid black;
+    overflow-x: auto;
 }
