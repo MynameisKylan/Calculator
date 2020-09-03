@@ -35,7 +35,7 @@ function updateDisplay(display, text) {
         if (text in operators) {
             op = operators[text]
         }
-    } else if (text === '=') {
+    } else if (text === '=' || (text === '.' && displayValue.includes('.'))) {
         // do nothing
     } else if (op && text in operators){
         op = operators[text];
