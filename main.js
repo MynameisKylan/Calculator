@@ -11,7 +11,7 @@ function multiply(a, b) {
 }
 
 function divide(a, b) {
-    return (b === 0) ? 'Can\'t divide by zero!' : (a / b);
+    return (b === 0) ? 'NaN' : (a / b);
 }
 
 function operate(op, a, b) {
@@ -22,6 +22,7 @@ function clear() {
     op = '';
     a = '';
     b = '';
+    displayValue = '0';
 }
 
 function updateHistory(op, a, b) {
@@ -36,26 +37,35 @@ function updateHistory(op, a, b) {
 }
 
 function deleteLast() {
-    displayValue = displayValue.slice(0, -1);
-    if (!b) {
-        a = a.slice(0, -1);
+    if (displayValue === 'NaN') { 
+        displayValue = '0';
     } else {
-        b = b.slice(0, -1);
+        displayValue = displayValue.slice(0, -1);
+        if (!b) {
+            a = a.slice(0, -1);
+        } else {
+            b = b.slice(0, -1);
+        }
     }
 }
 
 function updateDisplay(display, text) {
     if (text === 'Clear') {
-        displayValue = '0';
         clear();
     } else if (text === '←') {
         deleteLast();
     } else if (a !== '' && op && b !== '' && (text === '=' || text in operators)){
         // console.log('pop!')
-        displayValue = operate(operators[op], parseFloat(a), parseFloat(b)).toString();
+        let eval = operate(operators[op], parseFloat(a), parseFloat(b)).toString();
         updateHistory(op, a, b);
         clear();
-        a = displayValue;
+        if (eval === 'NaN') {
+            alert('Can\'t divide by zero!');
+            clear();
+        } else {
+            displayValue = eval;
+            a = eval;
+        }
         if (text in operators) {
             op = text
         }
