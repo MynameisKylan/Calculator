@@ -28,6 +28,8 @@ function updateDisplay(display, text) {
     if (text === 'Clear') {
         displayValue = '0';
         clear();
+    } else if (text === '←') {
+        displayValue = displayValue.slice(0, -1);
     } else if (a && op && b && (text === '=' || text in operators)){
         displayValue = operate(op, parseFloat(a), parseFloat(b));
         clear();
@@ -57,7 +59,7 @@ function updateDisplay(display, text) {
     console.log('a = ', a);
     console.log('b = ', b);
     console.log('op = ', op);
-    display.textContent = displayValue;
+    display.textContent = (displayValue) ? displayValue : '0';
 }
 
 const display = document.querySelector('#display');

@@ -27,6 +27,14 @@ button {
     float: left;
 }
 
-#clear {
+.specOps {
     float: right;
+}
+
+.ops {
+    background-color: rgb(170, 170, 170);
+}
+
+#equals {
+    background-color: skyblue;
 }
